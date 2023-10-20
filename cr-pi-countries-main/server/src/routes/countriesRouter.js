@@ -5,9 +5,8 @@ const getCountryByNameHandler = require("../handlers/countryHandler/getCountryBy
 
 const countriesRouter = Router();
 
-
-countriesRouter.get("/search", getCountryByNameHandler);
 countriesRouter.get("/", getCountriesHandler);
+countriesRouter.get("/search", getCountryByNameHandler);
 countriesRouter.get("/:id", getCountryByIdHandler);
 
 

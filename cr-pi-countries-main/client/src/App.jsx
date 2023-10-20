@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Home from "./components/home/Home";
+import Landing from "./components/landing/Landing";
+import Detail from "./components/detail/Detail";
+import Create from "./components/create/Create";
+import { useEffect } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setCountries } from "./redux/countriesSlice";
+import Navbar from "./components/navbar/NavBar";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch();
+  const location = useLocation();
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios("http://localhost:3001/countries");
+      dispatch(setCountries(response.data));
+    }
+    fetchData();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      {location.pathname !== "/" && <Navbar />}
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route exact path="/home" element={<Home />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/create" element={<Create />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;

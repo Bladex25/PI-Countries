@@ -10,7 +10,7 @@ module.exports = async() => {
         const countries = data.map((ct) =>({
             
             id: ct.cca3,
-            name: ct.name.official,
+            name: ct.name.common,
             flag: ct.flags.svg,
             continent : ct.continents[0],
             capital: ct.capital ? ct.capital[0] : "No Capital",

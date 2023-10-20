@@ -4,7 +4,7 @@ const { conn } = require('./src/db.js');
 const loadCountries = require("./src/controllers/loadCountries");
 const PORT = 3001;
 
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
 server.listen(PORT, () => {
   loadCountries()
   console.log(`Server listening on port ${PORT}`);
